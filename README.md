@@ -19,6 +19,83 @@ Comerciantes de mercados tradicionales 🛍️
 Crear una plataforma todo-en-uno que permita a cada negocio acceder a un sistema web moderno por membresía, con funcionalidades específicas para su rubro, integraciones locales (como Yape, Plin) y automatización de cobros y bloqueos (modo killer).
 
 🏗️ Arquitectura General
+
+/creciendodigitalbase  (Turborepo)
+├── apps/
+│   ├── core-admin/                # Panel de control maestro (SuperAdmin)
+│   │   ├── frontend/             # Next.js 14 (App Router)
+│   │   └── backend/              # NestJS
+│   │
+│   ├── modules/                  # Sistemas independientes por rubro
+│   │   ├── dentistas/            # Ejemplo completo
+│   │   │   ├── frontend/         # Next.js 14
+│   │   │   ├── backend/          # NestJS
+│   │   │   └── features/         # Lógica específica
+│   │   │       ├── citas/
+│   │   │       └── odontograma/
+│   │   │
+│   │   ├── veterinarias/
+│   │   ├── peluquerias/
+│   │   └── minimarkets/
+│   │
+│   └── landing/                  # Marketing (Next.js + CMS)
+│
+├── packages/
+│   ├── api-sdk/                  # SDK auto-generado
+│   │   ├── src/
+│   │   │   ├── clients/         # Axios instances
+│   │   │   └── generated/       # OpenAPI
+│   │
+│   ├── db/                       # Prisma + Esquemas
+│   │   ├── prisma/
+│   │   │   ├── schema/
+│   │   │   │   ├── core.prisma
+│   │   │   │   └── modules/
+│   │   │   │       ├── dental.prisma
+│   │   │   │       └── vet.prisma
+│   │   │   └── migrations/
+│   │
+│   ├── ui/                       # Componentes UI compartidos
+│   │   ├── src/
+│   │   │   ├── themes/          # Configs por nicho
+│   │   │   └── components/
+│   │   └── stories/             # Storybook
+│   │
+│   └── config/                  # Configuraciones ESLint/TS
+│
+├── services/                    # Microservicios
+│   ├── auth/                    # Autenticación JWT
+│   │   ├── src/
+│   │   │   ├── strategies/
+│   │   │   └── guards/
+│   │
+│   ├── billing/                 # Facturación Perú
+│   │   ├── src/
+│   │   │   ├── yape/
+│   │   │   ├── plin/
+│   │   │   └── sunat/
+│   │
+│   └── notifications/           # WhatsApp/Email
+│
+├── infrastructure/
+│   ├── docker/
+│   │   ├── compose/
+│   │   │   ├── dev.yml
+│   │   │   └── prod.yml
+│   │
+│   ├── terraform/               # AWS/GCP
+│   └── scripts/                 # Deploy/DB
+│
+├── docs/
+│   ├── architecture/            # Diagramas
+│   ├── api/                     # Swagger
+│   └── manuals/                 # Por nicho
+│
+└── .github/
+    ├── workflows/               # CI/CD
+    └── ISSUE_TEMPLATE/
+
+    
 Esta plataforma está organizada como un monorepo escalable basado en:
 
 🖥️ Frontend Web: React + Next.js + TailwindCSS
